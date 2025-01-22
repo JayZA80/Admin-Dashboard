@@ -1,6 +1,7 @@
 import express from 'express';
 import dotenv from 'dotenv';
-import conn from './src/db/conn.js';
+import conn from './src/conn.js';
+import getDataDefault from './src/getData.js';
 
 dotenv.config();
 
@@ -11,12 +12,16 @@ const db = process.env.db;
 
 app.use(express.static('public'));
 
-app.get('/', (req, res) => {
-    res.send('Hello World!')
+app.get('/', res => {
+    res.sendFile('public/index.html');
 })
 
 app.listen(port, () => {
-console.log(`Example app listening on port ${port}`)
-})
+    console.log(`Listening on port ${port}`);
+});
 
-const connection = conn(uri, `${db}`);
+conn(uri);
+
+
+// const defaultData = getDataDefault(connection);
+// console.log(defaultData);
